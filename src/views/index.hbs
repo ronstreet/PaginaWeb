@@ -1,0 +1,39 @@
+<div class="col-md-12">
+    <div class="card">
+        <div class="card-header">
+            <h1>Marcadores</h1>
+        </div>
+        <div class="card-body">
+            {{#if Lugar}}
+             <table class="table table-striped table-dark">
+                <thead>
+                        <tr>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Longitud</th>
+                        <th scope="col">Latitud</th>
+                        <th scope="col">Opciones</th>
+                        </tr>
+                </thead>
+                <tbody>
+                    {{#each Lugar}}
+                        <tr>
+                            <td>{{nombre}}</td>
+                            <td>{{longitud}}</td>
+                            <td>{{latitud}}</td>
+                            <td>
+                            <a href="/generarQR/{{@key}}" class="btn btn-info"style="margin-right: 10px;">Código QR</a>    
+                            <a href="/editar-marcador/{{@key}}" class="btn btn-success"style="margin-right: 10px;">Editar</a>
+                            <a href="/eliminar-marcador/{{@key}}" class="btn btn-danger">Eliminar</a>
+                            </td>
+                        </tr>
+                    {{/each}}
+               
+               
+            {{else}}
+            <h1>No hay marcadores aun</h1>
+            {{/if}}
+            </tbody>
+            </table>
+        </div>
+    </div>
+</div>

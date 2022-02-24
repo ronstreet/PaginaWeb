@@ -1,0 +1,71 @@
+<div class="container-fluid">
+    <h1> Crear Marcador</h1>
+    <div class="row">
+        <div class="col-md">
+              <div id='map'style='width:720px; height: 360px'>
+                            <script>
+                                    mapboxgl.accessToken = 'pk.eyJ1Ijoicm9uc3RyZWV0IiwiYSI6ImNrNWVlcHFmYzI2b2IzZG8za2J1emVpNTMifQ.UwczwBRhFZRxTGRIEyWEfQ';
+                                    const map = new mapboxgl.Map({
+                                    container: 'map', // container ID
+                                    style: 'mapbox://styles/ronstreet/ckyak3wqv2igc14qawmk03gj5', // style URL
+                                    center: [-78.498463, -0.1161695], // starting position [lng, lat]
+                                    zoom: 20.7 // starting zoom
+                                    });
+
+                                    map.on('click', (e) => {
+                                        const marker = new mapboxgl.Marker({
+                                        color: "red",
+                                        draggable: true
+                                        }).setLngLat(e.lngLat)
+                                        .addTo(map);
+                                        document.getElementById("latitud").value = e.lngLat.lat;
+                                        
+                                        document.getElementById("lontigud").value= e.lngLat.lng
+
+                                        marker.on('dragend',(e)=>{
+                                            const lngLat = marker.getLngLat();
+                                            document.getElementById("latitud").value = lngLat.lat;
+                                        
+                                            document.getElementById("lontigud").value= lngLat.lng
+                                        });                                    
+                                    
+                                    }); 
+                            </script>
+                    
+            </div>
+        </div>
+        <div class="col">
+            <form action="/nuevo-marcador" method="post">
+                <div class="form-group">
+                    <input type="text" name="nombre" placeholder="nombre" class="form-control" autofocus required>
+                </div>
+                 <div class="form-group">
+                    <input type="text" id='latitud' name="latitud" placeholder="latitud" class="form-control"  required readonly>
+                </div>
+                 <div class="form-group">
+                    <input type="text" id='lontigud' name="longitud" placeholder="longitud" class="form-control" required readonly>
+                </div>
+                <div>
+                    {{#if Lugar}}
+                        {{!-- <ul class="list-group"> --}}
+                            {{#each Lugar}}
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" name="lugares" id="{{@key}}" value="{{@key}}">
+                                    <label class="form-check-label" for="inlineCheckbox1">{{nombre}}</label>
+                                </div>
+                                
+                            {{/each}}
+                        {{!-- </ul> --}}
+                        {{else}}
+                        <h1>No existen lugares</h1>
+                        {{/if}}
+                </div>
+                <button class="btn btn-primary btn-block">
+                    Guardar
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+
